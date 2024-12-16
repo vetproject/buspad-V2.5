@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class VideoActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
