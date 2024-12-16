@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Buspad_2.5</string>
+    <string name="ticket_image">Ticket Image</string>
+    <string name="booking_ticket">Booking Ticket</string>
+    <string name="youtube_image">Youtube Image</string>
+    <string name="music_image">Music Image</string>
+    <string name="movie_image">Movie Image</string>
+    <string name="internet_image">Internet Image</string>
+    <string name="game_image">Game Image</string>
 </resources>
