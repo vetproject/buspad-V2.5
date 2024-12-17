@@ -3,7 +3,6 @@ package com.project.buspad_25;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 

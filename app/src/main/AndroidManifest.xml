@@ -24,26 +24,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <!-- main view -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
+        <!-- game view -->
         <activity
             android:name=".GameActivity"
             android:exported="false" />
+        <!-- internet view -->
         <activity
             android:name=".InternetActivity"
             android:exported="false" />
+        <!-- video view -->
         <activity
             android:name=".VideoActivity"
             android:exported="false" />
+        <!-- music view -->
         <activity
             android:name=".MusicActivity"
             android:exported="false" />
+        <!-- youtube view -->
         <activity
             android:name=".YoutubeActivity"
             android:exported="false" />
+        <!-- ticket view -->
         <activity
             android:name=".TicketActivity"
             android:exported="false" />

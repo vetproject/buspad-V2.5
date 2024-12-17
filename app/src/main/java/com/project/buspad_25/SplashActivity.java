@@ -1,18 +1,19 @@
 package com.project.buspad_25;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private int progressStatus = 0;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,32 +25,24 @@ public class SplashActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         // Simulate progress
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (progressStatus < 100) {
-                    progressStatus += 1;
+        new Thread(() -> {
+            while (progressStatus < 100) {
+                progressStatus += 1;
 
-                    // Update the progress bar
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressBar.setProgress(progressStatus);
-                        }
-                    });
-                    try {
-                        // Delay to simulate loading
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                // Update the progress bar
+                handler.post(() -> progressBar.setProgress(progressStatus));
+                try {
+                    // Delay to simulate loading
+                    Thread.sleep(30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-
-                // Transition to MainActivity when progress completes
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
             }
+
+            // Transition to MainActivity when progress completes
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }).start();
     }
 }

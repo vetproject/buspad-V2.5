@@ -50,6 +50,7 @@
                  />
 
             <TextView
+                android:id="@+id/ticket_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/booking_ticket"
@@ -85,6 +86,7 @@
                      />
 
                 <TextView
+                    android:id="@+id/youtube_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/youtube"
@@ -133,6 +135,7 @@
                      />
 
                 <TextView
+                    android:id="@+id/music_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/music"
@@ -168,6 +171,7 @@
                      />
 
                 <TextView
+                    android:id="@+id/video_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/movie"
@@ -215,6 +219,7 @@
                      />
 
                 <TextView
+                    android:id="@+id/internet_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/internet"
@@ -250,6 +255,7 @@
                      />
 
                 <TextView
+                    android:id="@+id/game_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/game"

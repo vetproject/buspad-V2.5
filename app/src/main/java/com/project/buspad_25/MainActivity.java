@@ -3,6 +3,8 @@ package com.project.buspad_25;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.widget.TextView;
+
 import java.util.Locale;
 
 import androidx.activity.EdgeToEdge;
@@ -76,17 +78,37 @@ public class MainActivity extends AppCompatActivity {
         chineseButton.setOnClickListener(v -> setLocale("zh"));
     }
 
-    // Function to change the language
+    // Function to change the language dynamically
     public void setLocale(String langCode) {
         Locale locale = new Locale(langCode);
         Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
+
+        Configuration config = getResources().getConfiguration();
+        config.setLocale(locale); // Update locale
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-        // Restart the activity to apply the new language
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+
+        // Manually update visible text in the UI
+        updateUI();
     }
 
+    private void updateUI() {
+        // Update the text for all visible UI components manually
+        TextView ticketText = findViewById(R.id.ticket_text);
+        ticketText.setText(getString(R.string.booking_ticket));
+
+        TextView youtubeText = findViewById(R.id.youtube_text);
+        youtubeText.setText(getString(R.string.youtube));
+
+        TextView musicText = findViewById(R.id.music_text);
+        musicText.setText(getString(R.string.music));
+
+        TextView videoText = findViewById(R.id.video_text);
+        videoText.setText(getString(R.string.movie));
+
+        TextView internetText = findViewById(R.id.internet_text);
+        internetText.setText(getString(R.string.internet));
+
+        TextView gameText = findViewById(R.id.game_text);
+        gameText.setText(getString(R.string.game));
+    }
 }
