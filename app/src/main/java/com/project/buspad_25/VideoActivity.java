@@ -14,7 +14,7 @@ public class VideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_youtube);
+        setContentView(R.layout.activity_video);
 
         // Set up the back button
         ImageView backButton = findViewById(R.id.back_main);

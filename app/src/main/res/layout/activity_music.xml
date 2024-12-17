@@ -9,17 +9,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="vertical"
-        android:background="@color/yellow"
-        tools:ignore="MissingConstraints,UselessParent">
+        android:orientation="horizontal"
+        android:background="@color/orange"
+        android:gravity="center_vertical"
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/back_main"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/back_icon"
             tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/music"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:gravity="center_vertical" />
     </LinearLayout>
 </LinearLayout>

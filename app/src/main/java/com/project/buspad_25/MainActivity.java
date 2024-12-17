@@ -1,7 +1,9 @@
 package com.project.buspad_25;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import java.util.Locale;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        /* Link other page ----------------------------------*/
+        // Link other pages ----------------------------------
 
         // Ticket View
         CardView ticketCardView = findViewById(R.id.ticket_view);
@@ -59,8 +61,32 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        /* Change languages in buspad ----------------------------------*/
+        /* Language change functionality ----------------------------------*/
 
+        // English Language Button
+        CardView englishButton = findViewById(R.id.english_view);
+        englishButton.setOnClickListener(v -> setLocale("en"));
 
+        // Khmer Language Button
+        CardView khmerButton = findViewById(R.id.khmer_view);
+        khmerButton.setOnClickListener(v -> setLocale("km"));
+
+        // Chinese Language Button
+        CardView chineseButton = findViewById(R.id.chines_view);
+        chineseButton.setOnClickListener(v -> setLocale("zh"));
     }
+
+    // Function to change the language
+    public void setLocale(String langCode) {
+        Locale locale = new Locale(langCode);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        // Restart the activity to apply the new language
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
 }

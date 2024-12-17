@@ -47,7 +47,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:src="@drawable/ticket"
-                android:contentDescription="@string/ticket_image" />
+                 />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,12 +82,12 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:src="@drawable/youtube"
-                    android:contentDescription="@string/youtube_image" />
+                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Youtube"
+                    android:text="@string/youtube"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:textColor="@color/purple"
@@ -130,12 +130,12 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:src="@drawable/music"
-                    android:contentDescription="@string/music_image" />
+                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Music"
+                    android:text="@string/music"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:textColor="@color/purple"
@@ -165,12 +165,12 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:src="@drawable/video"
-                    android:contentDescription="@string/movie_image" />
+                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Movie"
+                    android:text="@string/movie"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:textColor="@color/purple"
@@ -212,12 +212,12 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:src="@drawable/internet"
-                    android:contentDescription="@string/internet_image" />
+                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Internet"
+                    android:text="@string/internet"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:textColor="@color/purple"
@@ -247,12 +247,12 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:src="@drawable/game"
-                    android:contentDescription="@string/game_image" />
+                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Game"
+                    android:text="@string/game"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:textColor="@color/purple"
