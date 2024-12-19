@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="1024dp"
+    android:layout_height="550dp"
     tools:context=".MusicActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:background="@color/orange"
         android:gravity="center_vertical"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints,UselessParent">
 
         <ImageView
             android:id="@+id/back_main"
@@ -26,9 +26,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:text="@string/music"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:gravity="center_vertical" />
+            android:textColor="#5D4037"
+            android:textSize="20sp" />
     </LinearLayout>
 </LinearLayout>

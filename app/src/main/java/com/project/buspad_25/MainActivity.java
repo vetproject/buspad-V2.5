@@ -3,15 +3,21 @@ package com.project.buspad_25;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.text.InputType;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Locale;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String PASSWORD = "12345"; // Set password here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +25,15 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Link other pages ----------------------------------
+        // Link other pages
+        setupCardViews();
 
+        // Add click listener for Version Text
+        TextView versionText = findViewById(R.id.version_text);
+        versionText.setOnClickListener(v -> showPasswordDialog());
+    }
+
+    private void setupCardViews() {
         // Ticket View
         CardView ticketCardView = findViewById(R.id.ticket_view);
         ticketCardView.setOnClickListener(v -> {
@@ -63,8 +76,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        /* Language change functionality ----------------------------------*/
+        // Language change functionality
+        setupLanguageButtons();
+    }
 
+    private void setupLanguageButtons() {
         // English Language Button
         CardView englishButton = findViewById(R.id.english_view);
         englishButton.setOnClickListener(v -> setLocale("en"));
@@ -78,13 +94,12 @@ public class MainActivity extends AppCompatActivity {
         chineseButton.setOnClickListener(v -> setLocale("zh"));
     }
 
-    // Function to change the language dynamically
     public void setLocale(String langCode) {
         Locale locale = new Locale(langCode);
         Locale.setDefault(locale);
 
         Configuration config = getResources().getConfiguration();
-        config.setLocale(locale); // Update locale
+        config.setLocale(locale);
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
         // Manually update visible text in the UI
@@ -92,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        // Update the text for all visible UI components manually
         TextView ticketText = findViewById(R.id.ticket_text);
         ticketText.setText(getString(R.string.booking_ticket));
 
@@ -110,5 +124,31 @@ public class MainActivity extends AppCompatActivity {
 
         TextView gameText = findViewById(R.id.game_text);
         gameText.setText(getString(R.string.game));
+    }
+
+    private void showPasswordDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Password");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String enteredPassword = input.getText().toString();
+            if (enteredPassword.equals(PASSWORD)) {
+                openSettings();
+            } else {
+                dialog.dismiss(); // Optionally show a message for incorrect password
+            }
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        startActivity(intent);
     }
 }
