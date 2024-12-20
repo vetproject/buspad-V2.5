@@ -8,7 +8,7 @@
     tools:context=".InternetActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:background="@color/orange"
         android:gravity="center_vertical"
@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/back_main"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/back_icon"

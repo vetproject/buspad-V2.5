@@ -1,5 +1,6 @@
 package com.project.buspad_25;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.provider.Settings;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -17,7 +19,7 @@ import androidx.cardview.widget.CardView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PASSWORD = "12345"; // Set password here
+    private static final String PASSWORD = "12345"; // Set your desired password here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             if (enteredPassword.equals(PASSWORD)) {
                 openSettings();
             } else {
-                dialog.dismiss(); // Optionally show a message for incorrect password
+                dialog.dismiss();
             }
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
@@ -150,5 +152,12 @@ public class MainActivity extends AppCompatActivity {
     private void openSettings() {
         Intent intent = new Intent(Settings.ACTION_SETTINGS);
         startActivity(intent);
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        // Show a message indicating that back navigation is disabled
+        Toast.makeText(this, "Back navigation is disabled on this screen", Toast.LENGTH_SHORT).show();
     }
 }
