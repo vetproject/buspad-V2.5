@@ -1,12 +1,19 @@
 package com.project.buspad_25;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.InputType;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String PASSWORD = "12345"; // Set your desired password here
 
+    // declare internet and bluetooth
+    private ImageView internetIcon;
+    private ImageView bluetoothIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +44,23 @@ public class MainActivity extends AppCompatActivity {
         // Add click listener for Version Text
         TextView versionText = findViewById(R.id.version_text);
         versionText.setOnClickListener(v -> showPasswordDialog());
+
+        // find id of internet and bluetooth
+
+        internetIcon = findViewById(R.id.internet_icon);
+        bluetoothIcon = findViewById(R.id.bluetooth_icon);
+
+        // Register Receivers
+        registerReceiver(bluetoothReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+        registerReceiver(networkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+        // Initial Status Check
+        checkInternetConnection();
+        checkBluetoothStatus();
+
+        // Set onClickListeners
+        internetIcon.setOnClickListener(v -> openInternetSettings());
+        bluetoothIcon.setOnClickListener(v -> openBluetoothSettings());
     }
 
     private void setupCardViews() {
@@ -160,4 +188,74 @@ public class MainActivity extends AppCompatActivity {
         // Show a message indicating that back navigation is disabled
         Toast.makeText(this, "Back navigation is disabled on this screen", Toast.LENGTH_SHORT).show();
     }
+
+
+    @SuppressLint("SetTextI18n")
+    private void checkInternetConnection() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            internetIcon.setImageResource(R.drawable.internet_connect); // Replace with connected icon
+        } else {
+            internetIcon.setImageResource(R.drawable.internet_dis); // Replace with disconnected icon
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void checkBluetoothStatus() {
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+            bluetoothIcon.setImageResource(R.drawable.bluetooth_connect); // Replace with enabled icon
+        } else {
+            bluetoothIcon.setImageResource(R.drawable.bluetooth); // Replace with disabled icon
+        }
+    }
+
+    // BroadcastReceiver for Bluetooth State
+    private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+            switch (state) {
+                case BluetoothAdapter.STATE_ON:
+                    bluetoothIcon.setImageResource(R.drawable.bluetooth_connect);
+                    break;
+                case BluetoothAdapter.STATE_OFF:
+                    bluetoothIcon.setImageResource(R.drawable.bluetooth);
+                    break;
+            }
+        }
+    };
+
+    // BroadcastReceiver for Network Connectivity
+    private final BroadcastReceiver networkReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            checkInternetConnection();
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unregister Receivers
+        unregisterReceiver(bluetoothReceiver);
+        unregisterReceiver(networkReceiver);
+    }
+
+    // Open Internet Settings when clicked
+    private void openInternetSettings() {
+        Intent intent = new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS);
+        startActivity(intent);
+    }
+
+    // Open Bluetooth Settings when clicked
+    private void openBluetoothSettings() {
+        Intent intent = new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+        startActivity(intent);
+    }
+
 }

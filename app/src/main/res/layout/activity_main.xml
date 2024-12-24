@@ -13,6 +13,53 @@
         android:layout_height="match_parent"
         android:background="@drawable/bg_image" />
 
+    <LinearLayout
+        android:id="@+id/status_layout"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="514dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginStart="820dp"
+        android:orientation="horizontal"
+        tools:ignore="DisableBaselineAlignment">
+
+        <!-- Internet Status -->
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/internet_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/internet_connect"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <!-- Bluetooth Status -->
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/bluetooth_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/bluetooth_connect"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <GridLayout
         android:id="@+id/first_item_view"
         android:layout_width="380dp"
