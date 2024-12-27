@@ -11,4 +11,9 @@
     <string name="khmer_sg" translatable="false">Khmer Songs</string>
     <string name="english_sg" translatable="false">English Songs</string>
     <string name="remix_sg" translatable="false">Remix Songs</string>
+    <string name="cartoon" translatable="false">Cartoon Movie</string>
+    <string name="hollywood" translatable="false">Hollywood Movie</string>
+    <string name="khmer_comedy" translatable="false">Khmer Comedy</string>
+    <string name="dubbed_khmer" translatable="false">Movie Dubbed Khmer</string>
+    <string name="song" translatable="false">Song</string>
 </resources>

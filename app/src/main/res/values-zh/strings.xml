@@ -7,5 +7,13 @@
     <string name="movie">电影</string>
     <string name="internet">互联网</string>
     <string name="game">游戏</string>
+    <string name="khmer_sg" translatable="false">高棉歌曲</string>
+    <string name="english_sg" translatable="false">英文歌曲</string>
+    <string name="remix_sg" translatable="false">混音歌曲</string>
+    <string name="cartoon" translatable="false">卡通电影</string>
+    <string name="hollywood" translatable="false">好莱坞电影</string>
+    <string name="khmer_comedy" translatable="false">高棉喜剧</string>
+    <string name="dubbed_khmer" translatable="false">电影配音高棉</string>
+    <string name="song" translatable="false">歌曲电影</string>
 </resources>
 

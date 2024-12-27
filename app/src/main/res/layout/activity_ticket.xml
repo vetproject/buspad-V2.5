@@ -9,7 +9,7 @@
     tools:context=".TicketActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:background="@color/orange"
         android:gravity="center_vertical"

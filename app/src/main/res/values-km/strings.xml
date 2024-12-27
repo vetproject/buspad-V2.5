@@ -7,6 +7,14 @@
     <string name="movie">ភាពយន្ត</string>
     <string name="internet">អ៊ីនធឺណេត</string>
     <string name="game">ហ្គេម</string>
+    <string name="khmer_sg" translatable="false">ចម្រៀងខ្មែរ</string>
+    <string name="english_sg" translatable="false">ចម្រៀងអង់គ្លេស</string>
+    <string name="remix_sg" translatable="false">ចម្រៀងរីមិច</string>
+    <string name="cartoon" translatable="false">រឿងតុក្តា</string>
+    <string name="hollywood" translatable="false">រឿងហូលីវូដ</string>
+    <string name="khmer_comedy" translatable="false">រឿងកំប្លែង</string>
+    <string name="dubbed_khmer" translatable="false">រឿងខ្មែរ</string>
+    <string name="song" translatable="false">រីដេអូចម្រៀង</string>
 
 </resources>
 

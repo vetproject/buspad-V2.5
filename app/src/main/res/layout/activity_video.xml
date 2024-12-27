@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:background="@color/orange"
         android:gravity="center_vertical"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Cartoon Movie"
+                android:text="@string/cartoon"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Hollywood Movie"
+                android:text="@string/hollywood"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Khmer Comedy"
+                android:text="@string/khmer_comedy"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Movie Dubbed Khmer"
+                android:text="@string/dubbed_khmer"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -150,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Song"
+                android:text="@string/song"
                 android:textSize="18sp" />
         </LinearLayout>
 
