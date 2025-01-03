@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +20,5 @@ public class GameActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
-
     }
 }

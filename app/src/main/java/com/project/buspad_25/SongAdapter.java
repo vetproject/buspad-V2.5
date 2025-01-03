@@ -1,6 +1,5 @@
 package com.project.buspad_25;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,8 +37,8 @@ public class SongAdapter extends ArrayAdapter<Song> {
 
         // Populate views with data
         songTitle.setText(song.getSongName());
-        songArtist.setText("Unknown Artist");
-        albumArt.setImageResource(R.drawable.music_ic);
+        songArtist.setText("Unknown Artist"); // Can be updated if your data contains artist info
+        albumArt.setImageResource(R.drawable.music_ic); // Placeholder album art
 
         // Highlight the selected item
         if (position == selectedPosition) {
@@ -51,6 +50,7 @@ public class SongAdapter extends ArrayAdapter<Song> {
         return convertView;
     }
 
+    // Method to update the selected song
     public void setSelectedPosition(int position) {
         selectedPosition = position; // Update the selected position
         notifyDataSetChanged(); // Refresh the list to apply the highlighting

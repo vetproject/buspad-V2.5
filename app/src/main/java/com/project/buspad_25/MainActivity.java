@@ -26,7 +26,7 @@ import androidx.cardview.widget.CardView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PASSWORD = "12345"; // Set your desired password here
+    private static final String PASSWORD = "vet12345"; // Set your desired password here
 
     // declare internet and bluetooth
     private ImageView internetIcon;
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         // Video View
         CardView videoCardView = findViewById(R.id.video_view);
         videoCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+            Intent intent = new Intent(MainActivity.this, VideosActivity.class);
             startActivity(intent);
         });
 
@@ -188,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
         // Show a message indicating that back navigation is disabled
         Toast.makeText(this, "Back navigation is disabled on this screen", Toast.LENGTH_SHORT).show();
     }
-
 
     @SuppressLint("SetTextI18n")
     private void checkInternetConnection() {

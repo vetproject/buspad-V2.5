@@ -15,6 +15,26 @@
         android:theme="@style/Theme.Buspad_25"
         tools:targetApi="31">
         <activity
+            android:name=".VideoPlayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".KhmercomedyActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SongActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DubbedkhmerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".HollywoodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CartoonAcitvity"
+            android:exported="false" />
+        <activity
             android:name=".EnglishSongActivity"
             android:exported="false" />
         <activity
@@ -42,7 +62,7 @@
             android:name=".InternetActivity"
             android:exported="false" /> <!-- video view -->
         <activity
-            android:name=".VideoActivity"
+            android:name=".VideosActivity"
             android:exported="false" /> <!-- music view -->
         <activity
             android:name=".MusicActivity"
@@ -54,15 +74,17 @@
             android:name=".TicketActivity"
             android:exported="false" />
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission
         android:name="android.permission.BLUETOOTH_CONNECT"
-        tools:ignore="BluetoothConnect" /> <!-- Internet Permission -->
+        tools:ignore="BluetoothConnect" />
     <uses-permission
         android:name="android.permission.INTERNET"
         tools:ignore="ManifestOrder" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
 
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
