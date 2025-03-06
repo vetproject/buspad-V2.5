@@ -12,6 +12,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class VideoPlayerActivity extends AppCompatActivity {
@@ -22,10 +23,10 @@ public class VideoPlayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_video_player);
 
         playerView = findViewById(R.id.player_view);
-
         String videoPath = getIntent().getStringExtra("videoPath");
 
         if (videoPath != null && !videoPath.isEmpty()) {
@@ -37,23 +38,15 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
     private void initializePlayer(String videoPath) {
         try {
-            // Initialize ExoPlayer
             exoPlayer = new ExoPlayer.Builder(this).build();
             playerView.setPlayer(exoPlayer);
 
-            // Prepare the media source for HTTP URL
             Uri uri = Uri.parse(videoPath);
             MediaSource mediaSource = buildMediaSource(uri);
 
-            // Prepare and play the video
-            try {
-                exoPlayer.setMediaSource(mediaSource);
-                exoPlayer.prepare();
-                exoPlayer.play();
-            } catch (Exception e) {
-                Log.e("VideoPlayerActivity", "Error playing video: " + e.getMessage(), e);
-                Toast.makeText(this, "Error playing video", Toast.LENGTH_SHORT).show();
-            }
+            exoPlayer.setMediaSource(mediaSource);
+            exoPlayer.prepare();
+            exoPlayer.play();
         } catch (Exception e) {
             Log.e("VideoPlayerActivity", "Error initializing player: " + e.getMessage(), e);
             Toast.makeText(this, "Error initializing player", Toast.LENGTH_SHORT).show();
@@ -83,5 +76,4 @@ public class VideoPlayerActivity extends AppCompatActivity {
             exoPlayer = null;
         }
     }
-
 }

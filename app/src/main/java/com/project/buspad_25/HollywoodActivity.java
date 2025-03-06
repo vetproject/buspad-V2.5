@@ -3,8 +3,7 @@ package com.project.buspad_25;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jcraft.jsch.Channel;
@@ -13,36 +12,38 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class HollywoodActivity extends AppCompatActivity {
 
-    private ListView listView;
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> videoList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private VideoAdapter videoAdapter;
+    private List<Video> videoList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cartoon_acitvity);
 
-        listView = findViewById(R.id.listView);
+        ImageView backBtn = findViewById(R.id.back_main);
+        backBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(HollywoodActivity.this, VideosActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Fetch video list from the server
         new FetchVideosTask().execute();
-
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            String videoName = videoList.get(position);
-            // Construct the HTTP URL to access the video file
-            String videoPath = "http://192.168.8.131/busPad/movies/Hollywood/" + videoName;
-
-            // Pass the HTTP URL to the VideoPlayerActivity
-            Intent intent = new Intent(HollywoodActivity.this, VideoPlayerActivity.class);
-            intent.putExtra("videoPath", videoPath);
-            startActivity(intent);
-        });
     }
 
     private class FetchVideosTask extends AsyncTask<Void, Void, ArrayList<String>> {
@@ -52,8 +53,8 @@ public class HollywoodActivity extends AppCompatActivity {
             ArrayList<String> videos = new ArrayList<>();
             try {
                 JSch jsch = new JSch();
-                Session session = jsch.getSession("root", "192.168.8.131", 22);
-                session.setPassword("P@ssw0rd()");
+                Session session = jsch.getSession("root", "192.168.1.222", 22);
+                session.setPassword(" ");
                 session.setConfig("StrictHostKeyChecking", "no");
                 session.connect();
 
@@ -81,9 +82,12 @@ public class HollywoodActivity extends AppCompatActivity {
             if (result.isEmpty()) {
                 Toast.makeText(HollywoodActivity.this, "Failed to fetch videos", Toast.LENGTH_SHORT).show();
             } else {
-                videoList = result;
-                adapter = new ArrayAdapter<>(HollywoodActivity.this, android.R.layout.simple_list_item_1, videoList);
-                listView.setAdapter(adapter);
+                for (String videoName : result) {
+                    String videoPath = "http://192.168.1.222/busPad/movies/Hollywood/" + videoName;
+                    videoList.add(new Video(videoName, videoPath));
+                }
+                videoAdapter = new VideoAdapter(HollywoodActivity.this, videoList);
+                recyclerView.setAdapter(videoAdapter);
             }
         }
     }

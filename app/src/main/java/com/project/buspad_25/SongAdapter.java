@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 public class SongAdapter extends ArrayAdapter<Song> {
 
@@ -24,27 +25,33 @@ public class SongAdapter extends ArrayAdapter<Song> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        ViewHolder viewHolder;
+
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_music, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.songTitle = convertView.findViewById(R.id.item_title);
+            viewHolder.songArtist = convertView.findViewById(R.id.item_subtitle);
+            viewHolder.albumArt = convertView.findViewById(R.id.item_image);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Song song = getItem(position);
 
-        // Bind views
-        TextView songTitle = convertView.findViewById(R.id.item_title);
-        TextView songArtist = convertView.findViewById(R.id.item_subtitle);
-        ImageView albumArt = convertView.findViewById(R.id.item_image);
-
         // Populate views with data
-        songTitle.setText(song.getSongName());
-        songArtist.setText("Unknown Artist"); // Can be updated if your data contains artist info
-        albumArt.setImageResource(R.drawable.music_ic); // Placeholder album art
+        if (song != null) {
+            viewHolder.songTitle.setText(song.getSongName());
+            viewHolder.songArtist.setText("Unknown Artist"); // Update this if you have artist info in Song class
+            viewHolder.albumArt.setImageResource(R.drawable.music_ic); // Placeholder album art
+        }
 
         // Highlight the selected item
         if (position == selectedPosition) {
-            convertView.setBackgroundColor(getContext().getResources().getColor(android.R.color.black)); // Highlight color
+            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.black)); // Highlight color
         } else {
-            convertView.setBackgroundColor(getContext().getResources().getColor(androidx.cardview.R.color.cardview_dark_background)); // Default color
+            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), androidx.cardview.R.color.cardview_dark_background)); // Default color
         }
 
         return convertView;
@@ -54,5 +61,12 @@ public class SongAdapter extends ArrayAdapter<Song> {
     public void setSelectedPosition(int position) {
         selectedPosition = position; // Update the selected position
         notifyDataSetChanged(); // Refresh the list to apply the highlighting
+    }
+
+    // ViewHolder pattern for performance
+    private static class ViewHolder {
+        TextView songTitle;
+        TextView songArtist;
+        ImageView albumArt;
     }
 }

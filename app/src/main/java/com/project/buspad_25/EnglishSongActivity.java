@@ -6,12 +6,14 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.media.AudioManager;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -19,10 +21,12 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class EnglishSongActivity extends AppCompatActivity {
@@ -37,6 +41,7 @@ public class EnglishSongActivity extends AppCompatActivity {
     ListView songListView;
 
     ArrayList<Song> songList = new ArrayList<>();
+    HashMap<String, String> songMap = new HashMap<>();
     SongAdapter songAdapter;
 
     int currentSongIndex = 0; // Track the currently playing song index
@@ -44,6 +49,7 @@ public class EnglishSongActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_english_song);
 
         // Initialize UI components
@@ -56,6 +62,9 @@ public class EnglishSongActivity extends AppCompatActivity {
         btPause = findViewById(R.id.bt_pause);
         btFf = findViewById(R.id.bt_ff);
         songListView = findViewById(R.id.song_list);
+
+        // Set up audio stream type
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         // Initialize MediaPlayer
         mediaPlayer = new MediaPlayer();
@@ -83,19 +92,24 @@ public class EnglishSongActivity extends AppCompatActivity {
 
         // Handle Play button click
         btPlay.setOnClickListener(v -> {
-            btPlay.setVisibility(View.GONE);
-            btPause.setVisibility(View.VISIBLE);
-            mediaPlayer.start();
-            seekBar.setMax(mediaPlayer.getDuration());
-            handler.postDelayed(runnable, 0);
+            if (isMediaPlayerReady()) {
+                mediaPlayer.start();
+                handler.postDelayed(runnable, 0);
+                btPlay.setVisibility(View.GONE);
+                btPause.setVisibility(View.VISIBLE);
+            } else {
+                Toast.makeText(this, "MediaPlayer is not ready", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // Handle Pause button click
         btPause.setOnClickListener(v -> {
-            btPause.setVisibility(View.GONE);
-            btPlay.setVisibility(View.VISIBLE);
-            mediaPlayer.pause();
-            handler.removeCallbacks(runnable);
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                handler.removeCallbacks(runnable);
+                btPause.setVisibility(View.GONE);
+                btPlay.setVisibility(View.VISIBLE);
+            }
         });
 
         // Handle Fast-Forward button click
@@ -124,7 +138,7 @@ public class EnglishSongActivity extends AppCompatActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
+                if (fromUser && mediaPlayer.isPlaying()) {
                     mediaPlayer.seekTo(progress);
                 }
                 playerPosition.setText(convertFormat(mediaPlayer.getCurrentPosition()));
@@ -150,30 +164,56 @@ public class EnglishSongActivity extends AppCompatActivity {
         mediaPlayer.setOnCompletionListener(mp -> {
             btPause.setVisibility(View.GONE);
             btPlay.setVisibility(View.VISIBLE);
-            mediaPlayer.seekTo(0);
-            seekBar.setProgress(0);
-            playerPosition.setText(convertFormat(0));
+            if (mediaPlayer != null) {
+                try {
+                    mediaPlayer.stop();
+                    mediaPlayer.reset();
+                } catch (Exception e) {
+                    Log.e("KhmerSongActivity", "Error on song completion: " + e.getMessage());
+                }
+            }
+            currentSongIndex = (currentSongIndex + 1) % songList.size(); // Loop through songs
+            playSong(songList.get(currentSongIndex));
         });
 
         // Runnable to update the SeekBar in real-time
         runnable = new Runnable() {
             @Override
             public void run() {
-                seekBar.setProgress(mediaPlayer.getCurrentPosition());
+                if (mediaPlayer != null) {
+                    if (mediaPlayer.isPlaying()) {
+                        seekBar.setProgress(mediaPlayer.getCurrentPosition());
+                    }
+                }
                 handler.postDelayed(this, 500);
             }
         };
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mediaPlayer != null && mediaPlayer.isPlaying()){
+            mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null; // Avoid memory leaks
+        }
+    }
 
     private class FetchSongsTask extends AsyncTask<Void, Void, List<Song>> {
-
         @Override
         protected List<Song> doInBackground(Void... voids) {
             List<Song> songs = new ArrayList<>();
             try {
                 JSch jsch = new JSch();
-                Session session = jsch.getSession("root", "192.168.8.131", 22);
-                session.setPassword("P@ssw0rd()");
+                Session session = jsch.getSession("root", "192.168.1.222", 22);
+                session.setPassword(" "); // Make sure to set the correct password
                 session.setConfig("StrictHostKeyChecking", "no");
                 session.connect();
 
@@ -181,11 +221,13 @@ public class EnglishSongActivity extends AppCompatActivity {
                 channel.connect();
                 ChannelSftp sftp = (ChannelSftp) channel;
 
-                Vector<ChannelSftp.LsEntry> files = sftp.ls("/var/www/html/busPad/musics/English song");
+                Vector<ChannelSftp.LsEntry> files = sftp.ls("/var/www/html/busPad/musics/Englishsong");
                 for (ChannelSftp.LsEntry file : files) {
                     if (!file.getAttrs().isDir()) {
                         String songTitle = file.getFilename();
-                        String songUri = "http://192.168.8.131/busPad/musics/English song/" + songTitle;
+                        String songUri = "http://192.168.1.222/busPad/musics/Englishsong/" + songTitle;
+                        Log.d("KhmerSongActivity", "Found song: " + songTitle + " at URI: " + songUri);
+                        songMap.put(songTitle, songUri);
                         songs.add(new Song(songTitle, songUri)); // Add song with title and URI
                     }
                 }
@@ -193,6 +235,7 @@ public class EnglishSongActivity extends AppCompatActivity {
                 sftp.disconnect();
                 session.disconnect();
             } catch (Exception e) {
+                Log.e("KhmerSongActivity", "Error fetching songs: " + e.getMessage());
                 e.printStackTrace();
             }
             return songs;
@@ -211,43 +254,63 @@ public class EnglishSongActivity extends AppCompatActivity {
     }
 
     private void playSong(Song song) {
-        // Stop and reset the MediaPlayer if it's already playing
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            mediaPlayer.reset();
+        if (song == null || song.getSongFilePath() == null) {
+            Toast.makeText(this, "Invalid song data", Toast.LENGTH_SHORT).show();
+            return;
         }
 
+        // Stop and reset the MediaPlayer if it's already playing
+        if (mediaPlayer != null) {
+            try {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                }
+            } catch (Exception e) {
+                Log.e("KhmerSongActivity", "Error stopping MediaPlayer: " + e.getMessage());
+            }
+            btPause.setVisibility(View.GONE);
+            btPlay.setVisibility(View.VISIBLE);
+            mediaPlayer.reset(); // Reset before setting a new data source
+        } else {
+            mediaPlayer = new MediaPlayer(); // Initialize MediaPlayer if it's null
+        }
+
+        mediaPlayer.setOnErrorListener((mp, what, extra) -> {
+            Log.e("KhmerSongActivity", "Error occurred: What=" + what + " Extra=" + extra);
+            return true; // Handle error
+        });
         try {
-            // Create MediaPlayer instance from the song URI (which is the file path)
-            mediaPlayer.setDataSource(song.getSongFilePath());  // Use song URI for the file path
-            mediaPlayer.prepare();  // Prepare the MediaPlayer
-            mediaPlayer.start();  // Start playing the song
+            Log.d("KhmerSongActivity", "Playing song: " + song.getSongFilePath());
+            mediaPlayer.setDataSource(song.getSongFilePath());
 
-            // Update the UI with the song details
-            currentSongTitle.setText(song.getSongName());  // Display song name
-            playerDuration.setText(convertFormat(mediaPlayer.getDuration()));  // Show song duration
-            playerPosition.setText(convertFormat(0));  // Set the current position to 0 initially
-            seekBar.setMax(mediaPlayer.getDuration());  // Set SeekBar max to song duration
+            mediaPlayer.setOnPreparedListener(mp -> {
+                mp.start();  // Start playing the song when prepared
+                currentSongTitle.setText(song.getSongName());
+                if (!mp.isPlaying()) {
+                    mp.start();
+                }
 
-            // Start updating the SeekBar
-            handler.postDelayed(runnable, 0);
+                playerDuration.setText(convertFormat(mp.getDuration()));
+                playerPosition.setText(convertFormat(0));
+                seekBar.setMax(mp.getDuration());
 
-            // Update play/pause buttons visibility
-            btPlay.setVisibility(View.GONE);  // Hide play button
-            btPause.setVisibility(View.VISIBLE);  // Show pause button
+                // Start updating the SeekBar
+                handler.postDelayed(runnable, 0);
+                btPlay.setVisibility(View.GONE);
+                btPause.setVisibility(View.VISIBLE);
+            });
 
+            mediaPlayer.prepareAsync();  // Prepare asynchronously
         } catch (Exception e) {
+            Log.e("KhmerSongActivity", "Error loading song: " + e.getMessage());
             e.printStackTrace();
             Toast.makeText(this, "Error loading song", Toast.LENGTH_SHORT).show();
         }
+    }
 
-        // Listen for song completion to reset the player and buttons
-        mediaPlayer.setOnCompletionListener(mp -> {
-            btPause.setVisibility(View.GONE);  // Hide pause button
-            btPlay.setVisibility(View.VISIBLE);  // Show play button
-            seekBar.setProgress(0);  // Reset the SeekBar
-            playerPosition.setText(convertFormat(0));  // Reset the current position text
-        });
+    private boolean isMediaPlayerReady() {
+        return mediaPlayer != null &&
+                (mediaPlayer.getCurrentPosition() >= 0 || mediaPlayer.getDuration() > 0);
     }
 
     @SuppressLint("DefaultLocale")

@@ -122,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
         // Chinese Language Button
         CardView chineseButton = findViewById(R.id.chines_view);
         chineseButton.setOnClickListener(v -> setLocale("zh"));
+
+        // Thai Language Button
+        CardView thaiButton = findViewById(R.id.thai_view);
+        thaiButton.setOnClickListener(v -> setLocale("th"));
     }
 
     public void setLocale(String langCode) {

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="1024dp"
-    android:layout_height="550dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <View
@@ -321,25 +322,26 @@
     </GridLayout>
     <GridLayout
         android:id="@+id/languages_view"
-        android:layout_width="340dp"
+        android:layout_width="380dp"
         android:layout_height="60dp"
-        android:layout_marginLeft="550dp"
+        android:layout_marginLeft="535dp"
         android:layout_below="@+id/third_item_view"
         android:layout_marginTop="-50dp"
-        android:columnCount="3"
+        android:columnCount="4"
         android:rowCount="1"
-
+        android:padding="10dp"
+        android:background="@drawable/barlanguage"
         tools:ignore="RtlHardcoded,VisualLintBounds">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/khmer_view"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_column="0"
             android:layout_columnWeight="0"
             android:layout_row="0"
             android:layout_rowWeight="0"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             tools:ignore="VisualLintBounds">
 
             <LinearLayout
@@ -348,18 +350,17 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:background="@drawable/kh"
-
                 tools:ignore="UselessLeaf" />
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:id="@+id/english_view"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_column="1"
             android:layout_columnWeight="0"
             android:layout_row="0"
             android:layout_rowWeight="0"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             tools:ignore="VisualLintBounds">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -373,13 +374,13 @@
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:id="@+id/chines_view"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_column="2"
             android:layout_columnWeight="0"
             android:layout_row="0"
             android:layout_rowWeight="0"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             tools:ignore="VisualLintBounds">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -387,6 +388,26 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:background="@drawable/ch"
+                tools:ignore="ExtraText,UselessLeaf">
+                >
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/thai_view"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_column="3"
+            android:layout_columnWeight="0"
+            android:layout_row="0"
+            android:layout_rowWeight="0"
+            android:layout_marginEnd="10dp"
+            tools:ignore="VisualLintBounds">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:background="@drawable/thai"
                 tools:ignore="ExtraText,UselessLeaf">
                 >
             </LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VET Air Bus Express</string>
+    <string name="booking_ticket">การจองตั๋ว</string>
+    <string name="youtube">ยูทูบ</string>
+    <string name="music">เพลง</string>
+    <string name="movie">ภาพยนตร์</string>
+    <string name="internet">อินเทอร์เน็ต</string>
+    <string name="game">เกม</string>
+    <string name="khmer_sg" translatable="false">เพลงเขมร</string>
+    <string name="english_sg" translatable="false">เพลงอังกฤษ</string>
+    <string name="remix_sg" translatable="false">เพลงรีมิกซ์</string>
+    <string name="cartoon" translatable="false">การ์ตูน</string>
+    <string name="hollywood" translatable="false">หนังฮอลลีวูด</string>
+    <string name="khmer_comedy" translatable="false">หนังตลก</string>
+    <string name="dubbed_khmer" translatable="false">หนังเขมร</string>
+    <string name="song" translatable="false">เพลงวิทยุ</string>
+</resources>
