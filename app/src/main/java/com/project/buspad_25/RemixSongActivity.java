@@ -212,8 +212,8 @@ public class RemixSongActivity extends AppCompatActivity {
             List<Song> songs = new ArrayList<>();
             try {
                 JSch jsch = new JSch();
-                Session session = jsch.getSession("root", "192.168.1.222", 22);
-                session.setPassword(" "); // Make sure to set the correct password
+                Session session = jsch.getSession("root", "192.168.8.222", 22);
+                session.setPassword("vet666888"); // Make sure to set the correct password
                 session.setConfig("StrictHostKeyChecking", "no");
                 session.connect();
 
@@ -225,7 +225,7 @@ public class RemixSongActivity extends AppCompatActivity {
                 for (ChannelSftp.LsEntry file : files) {
                     if (!file.getAttrs().isDir()) {
                         String songTitle = file.getFilename();
-                        String songUri = "http://192.168.1.222/busPad/musics/remix/" + songTitle;
+                        String songUri = "http://192.168.8.222/busPad/musics/remix/" + songTitle;
                         Log.d("KhmerSongActivity", "Found song: " + songTitle + " at URI: " + songUri);
                         songMap.put(songTitle, songUri);
                         songs.add(new Song(songTitle, songUri)); // Add song with title and URI

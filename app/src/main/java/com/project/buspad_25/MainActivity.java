@@ -26,7 +26,7 @@ import androidx.cardview.widget.CardView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PASSWORD = "vet12345"; // Set your desired password here
+    private static final String PASSWORD = "vet666888"; // Set your desired password here
 
     // declare internet and bluetooth
     private ImageView internetIcon;

@@ -322,7 +322,7 @@
     </GridLayout>
     <GridLayout
         android:id="@+id/languages_view"
-        android:layout_width="380dp"
+        android:layout_width="370dp"
         android:layout_height="60dp"
         android:layout_marginLeft="535dp"
         android:layout_below="@+id/third_item_view"

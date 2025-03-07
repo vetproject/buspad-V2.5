@@ -41,6 +41,7 @@ dependencies {
     implementation("com.jcraft:jsch:0.1.55")
     implementation("androidx.core:core-ktx:1.10.0")
     implementation("com.google.android.exoplayer:exoplayer:2.18.1")
+    implementation(libs.play.services.ads.lite)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

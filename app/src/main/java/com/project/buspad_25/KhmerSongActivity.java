@@ -212,8 +212,8 @@ public class KhmerSongActivity extends AppCompatActivity {
             List<Song> songs = new ArrayList<>();
             try {
                 JSch jsch = new JSch();
-                Session session = jsch.getSession("root", "192.168.1.222", 22);
-                session.setPassword(" "); // Make sure to set the correct password
+                Session session = jsch.getSession("root", "192.168.8.222", 22);
+                session.setPassword("vet666888"); // Make sure to set the correct password
                 session.setConfig("StrictHostKeyChecking", "no");
                 session.connect();
 
