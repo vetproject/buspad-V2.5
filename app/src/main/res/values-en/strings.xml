@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">VET Air Bus Express</string>
+    <string name="app_name">BusPad</string>
     <string name="booking_ticket">Booking Ticket</string>
     <string name="youtube">YouTube</string>
     <string name="music">Music</string>

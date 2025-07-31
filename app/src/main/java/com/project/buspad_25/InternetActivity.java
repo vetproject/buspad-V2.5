@@ -35,7 +35,6 @@ public class InternetActivity extends AppCompatActivity {
         webBrowser.getSettings().setJavaScriptEnabled(true); // Enable JavaScript
         webBrowser.setWebViewClient(new WebClient());
 
-
     }
 
     // Custom WebViewClient class to handle URL loading

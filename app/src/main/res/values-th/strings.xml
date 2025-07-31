@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">VET Air Bus Express</string>
+    <string name="app_name">BusPad</string>
     <string name="booking_ticket">การจองตั๋ว</string>
     <string name="youtube">ยูทูบ</string>
     <string name="music">เพลง</string>

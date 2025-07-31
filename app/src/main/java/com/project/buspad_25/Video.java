@@ -17,4 +17,3 @@ public class Video {
         return videoUri;
     }
 }
-

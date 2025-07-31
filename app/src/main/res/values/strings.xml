@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">VET Air Bus Express</string>
+    <string name="app_name">BusPad</string>
     <string name="booking_ticket">Booking Ticket</string>
     <string name="youtube">YouTube</string>
     <string name="music">Music</string>
     <string name="movie">Movie</string>
     <string name="internet">Internet</string>
     <string name="game">Game</string>
-    <string name="version" translatable="false">Version 2.5</string>
+    <string name="version" translatable="false">Version 2.6.1</string>
     <string name="bus_image" translatable="false">bus_image</string>
     <string name="khmer_sg" translatable="false">Khmer Songs</string>
     <string name="english_sg" translatable="false">English Songs</string>

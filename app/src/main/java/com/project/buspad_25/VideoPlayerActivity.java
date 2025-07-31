@@ -27,6 +27,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video_player);
 
         playerView = findViewById(R.id.player_view);
+
         String videoPath = getIntent().getStringExtra("videoPath");
 
         if (videoPath != null && !videoPath.isEmpty()) {
@@ -38,15 +39,23 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
     private void initializePlayer(String videoPath) {
         try {
+            // Initialize ExoPlayer
             exoPlayer = new ExoPlayer.Builder(this).build();
             playerView.setPlayer(exoPlayer);
 
+            // Prepare the media source for HTTP URL
             Uri uri = Uri.parse(videoPath);
             MediaSource mediaSource = buildMediaSource(uri);
 
-            exoPlayer.setMediaSource(mediaSource);
-            exoPlayer.prepare();
-            exoPlayer.play();
+            // Prepare and play the video
+            try {
+                exoPlayer.setMediaSource(mediaSource);
+                exoPlayer.prepare();
+                exoPlayer.play();
+            } catch (Exception e) {
+                Log.e("VideoPlayerActivity", "Error playing video: " + e.getMessage(), e);
+                Toast.makeText(this, "Error playing video", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             Log.e("VideoPlayerActivity", "Error initializing player: " + e.getMessage(), e);
             Toast.makeText(this, "Error initializing player", Toast.LENGTH_SHORT).show();
@@ -76,4 +85,5 @@ public class VideoPlayerActivity extends AppCompatActivity {
             exoPlayer = null;
         }
     }
+
 }

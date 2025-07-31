@@ -1,112 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MusicActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@color/orange"
-        android:gravity="center_vertical"
-        tools:ignore="MissingConstraints,UselessParent">
-
-        <ImageView
-            android:id="@+id/back_main"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/back_icon"
-            tools:ignore="ContentDescription,ImageContrastCheck" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/music"
-            android:textColor="#5D4037"
-            android:textSize="20sp" />
-    </LinearLayout>
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
-        <!-- Khmer Songs Folder -->
         <LinearLayout
-            android:id="@+id/khmer_song"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="50dp"
+            android:background="@color/orange"
             android:gravity="center_vertical">
 
             <ImageView
+                android:id="@+id/back_main"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_folder" />
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/back_icon"
+                android:contentDescription="Back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/khmer_sg"
-                android:textSize="18sp" />
+                android:text="Music Folders"
+                android:textColor="#5D4037"
+                android:textSize="20sp" />
         </LinearLayout>
 
-        <!-- English Songs Folder -->
         <LinearLayout
-            android:id="@+id/english_song"
+            android:id="@+id/folder_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_folder" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/english_sg"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <!-- Remix Songs Folder -->
-        <LinearLayout
-            android:id="@+id/remix_song"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_folder" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/remix_sg"
-                android:textSize="18sp" />
-        </LinearLayout>
+            android:orientation="vertical"
+            android:padding="16dp" />
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

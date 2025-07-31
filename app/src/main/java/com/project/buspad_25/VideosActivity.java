@@ -1,15 +1,27 @@
 package com.project.buspad_25;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
+
+import java.util.Vector;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class VideosActivity extends AppCompatActivity {
+
+    private LinearLayout folderContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,55 +29,66 @@ public class VideosActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_video);
 
-        // Set up the back button
+        folderContainer = findViewById(R.id.folder_container);
         ImageView backButton = findViewById(R.id.back_main);
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(VideosActivity.this, MainActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(VideosActivity.this, MainActivity.class));
             finish();
         });
 
-        // Set up the movie categories
-        // Set up the cartoon movies
-        LinearLayout cartoonMovies = findViewById(R.id.cartoon_movies);
-        cartoonMovies.setOnClickListener(v -> {
-            Intent intent = new Intent(VideosActivity.this, CartoonAcitvity.class);
-            startActivity(intent);
-            finish();
-        });
-        // Set up the hollywood movies
-        LinearLayout hollywoodMovies = findViewById(R.id.hollywood_movies);
-        hollywoodMovies.setOnClickListener(v -> {
-            Intent intent = new Intent(VideosActivity.this, HollywoodActivity.class);
-            startActivity(intent);
-            finish();
+        new FetchFoldersTask().execute();
+    }
 
-        });
+    private class FetchFoldersTask extends AsyncTask<Void, Void, Vector<ChannelSftp.LsEntry>> {
+        @Override
+        protected Vector<ChannelSftp.LsEntry> doInBackground(Void... voids) {
+            Vector<ChannelSftp.LsEntry> folders = new Vector<>();
+            try {
+                JSch jsch = new JSch();
+                Session session = jsch.getSession("root", "192.168.8.222", 22);
+                session.setPassword("vet666888");
+                session.setConfig("StrictHostKeyChecking", "no");
+                session.connect();
 
-        // Set up the khmer dubbed movies
-        LinearLayout khmerDubbedMovies = findViewById(R.id.movie_dubbed_khmer);
-        khmerDubbedMovies.setOnClickListener(v -> {
-            Intent intent = new Intent(VideosActivity.this, DubbedkhmerActivity.class);
-            startActivity(intent);
-            finish();
-        });
+                Channel channel = session.openChannel("sftp");
+                channel.connect();
+                ChannelSftp sftp = (ChannelSftp) channel;
 
-        // Set up the song video
-        LinearLayout songVideo = findViewById(R.id.song);
-        songVideo.setOnClickListener(v -> {
-            Intent intent = new Intent(VideosActivity.this, SongActivity.class);
-            startActivity(intent);
-            finish();
-        });
+                Vector<ChannelSftp.LsEntry> entries = sftp.ls("/var/www/html/movies");
+                for (ChannelSftp.LsEntry entry : entries) {
+                    if (entry.getAttrs().isDir() && !entry.getFilename().equals(".") && !entry.getFilename().equals("..")) {
+                        folders.add(entry);
+                    }
+                }
 
-        // Set up the khmer comedy
-        LinearLayout khmerComedy = findViewById(R.id.khmer_comedy);
-        khmerComedy.setOnClickListener(v -> {
-            Intent intent = new Intent(VideosActivity.this, KhmercomedyActivity.class);
-            startActivity(intent);
-            finish();
-        });
+                sftp.disconnect();
+                session.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return folders;
+        }
 
+        @Override
+        protected void onPostExecute(Vector<ChannelSftp.LsEntry> folders) {
+            if (folders.isEmpty()) {
+                Toast.makeText(VideosActivity.this, "No folders found", Toast.LENGTH_SHORT).show();
+            } else {
+                LayoutInflater inflater = LayoutInflater.from(VideosActivity.this);
+                for (ChannelSftp.LsEntry folder : folders) {
+                    LinearLayout view = (LinearLayout) inflater.inflate(R.layout.folder_item, folderContainer, false);
+                    TextView name = view.findViewById(R.id.folder_name);
+                    name.setText(folder.getFilename());
 
+                    view.setOnClickListener(v -> {
+                        Intent intent = new Intent(VideosActivity.this, FolderVideosActivity.class);
+                        intent.putExtra("folderName", folder.getFilename());
+                        startActivity(intent);
+                    });
+
+                    folderContainer.addView(view);
+                }
+            }
+        }
     }
 }

@@ -23,10 +23,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="514dp"
         android:layout_marginEnd="65dp"
-        android:layout_marginStart="820dp"
+        android:layout_marginStart="800dp"
         android:orientation="horizontal"
         tools:ignore="DisableBaselineAlignment">
-
         <!-- Internet Status -->
         <LinearLayout
             android:layout_width="50dp"
@@ -58,7 +57,6 @@
                 android:src="@drawable/bluetooth_connect"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
-
     </LinearLayout>
 
     <GridLayout
@@ -322,113 +320,133 @@
     </GridLayout>
     <GridLayout
         android:id="@+id/languages_view"
-        android:layout_width="370dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="535dp"
+        android:layout_width="420dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="510dp"
         android:layout_below="@+id/third_item_view"
         android:layout_marginTop="-50dp"
         android:columnCount="4"
         android:rowCount="1"
         android:padding="10dp"
-        android:background="@drawable/barlanguage"
         tools:ignore="RtlHardcoded,VisualLintBounds">
 
+        <!-- Khmer -->
         <androidx.cardview.widget.CardView
             android:id="@+id/khmer_view"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_column="0"
-            android:layout_columnWeight="0"
-            android:layout_row="0"
-            android:layout_rowWeight="0"
-            android:layout_marginEnd="10dp"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@android:color/transparent"
             tools:ignore="VisualLintBounds">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/kh"
-                tools:ignore="UselessLeaf" />
+                android:gravity="center"
+                android:background="@android:color/transparent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/kh"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <!-- English -->
         <androidx.cardview.widget.CardView
             android:id="@+id/english_view"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_column="1"
-            android:layout_columnWeight="0"
-            android:layout_row="0"
-            android:layout_rowWeight="0"
-            android:layout_marginEnd="10dp"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@android:color/transparent"
             tools:ignore="VisualLintBounds">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/en"
-                tools:ignore="ExtraText,UselessLeaf">
-                >
+                android:gravity="center"
+                android:background="@android:color/transparent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/en"
+                    android:scaleType="fitXY" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <!-- Chinese -->
         <androidx.cardview.widget.CardView
             android:id="@+id/chines_view"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_column="2"
-            android:layout_columnWeight="0"
-            android:layout_row="0"
-            android:layout_rowWeight="0"
-            android:layout_marginEnd="10dp"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@android:color/transparent"
             tools:ignore="VisualLintBounds">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/ch"
-                tools:ignore="ExtraText,UselessLeaf">
-                >
+                android:gravity="center"
+                android:background="@android:color/transparent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ch"
+                    android:scaleType="fitXY" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <!-- Thai -->
         <androidx.cardview.widget.CardView
             android:id="@+id/thai_view"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_column="3"
-            android:layout_columnWeight="0"
-            android:layout_row="0"
-            android:layout_rowWeight="0"
-            android:layout_marginEnd="10dp"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@android:color/transparent"
             tools:ignore="VisualLintBounds">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:orientation="vertical"
-                android:background="@drawable/thai"
-                tools:ignore="ExtraText,UselessLeaf">
-                >
+                android:gravity="center"
+                android:background="@android:color/transparent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/thai"
+                    android:scaleType="fitXY" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </GridLayout>
 
+
     <TextView
         android:id="@+id/version_text"
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="12dp"
-        android:layout_marginEnd="116dp"
-        android:layout_marginStart="826dp"
-        android:layout_marginTop="519dp"
+        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="-32dp"
+        android:layout_marginStart="800dp"
+        android:layout_marginTop="469dp"
+        android:width="70dp"
+        android:height="30dp"
         android:text="@string/version"
         android:textColor="@color/white"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        tools:ignore="TextSizeCheck" />
+        android:textStyle="bold" />
 </RelativeLayout>

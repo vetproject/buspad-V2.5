@@ -35,10 +35,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, VideoPlayerActivity.class);
-            intent.putExtra("videoUri", video.getVideoUri());
+            intent.putExtra("videoPath", video.getVideoUri());
             context.startActivity(intent);
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -47,7 +48,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
     static class VideoViewHolder extends RecyclerView.ViewHolder {
         TextView title;
-
+ 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.video_title);

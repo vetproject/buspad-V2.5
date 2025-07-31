@@ -43,27 +43,30 @@ public class SongAdapter extends ArrayAdapter<Song> {
         // Populate views with data
         if (song != null) {
             viewHolder.songTitle.setText(song.getSongName());
-            viewHolder.songArtist.setText("Unknown Artist"); // Update this if you have artist info in Song class
-            viewHolder.albumArt.setImageResource(R.drawable.music_ic); // Placeholder album art
+            viewHolder.songArtist.setText("Unknown Artist"); // Update if artist info is available
+            viewHolder.albumArt.setImageResource(R.drawable.music_ic); // Placeholder image
         }
 
         // Highlight the selected item
         if (position == selectedPosition) {
-            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.black)); // Highlight color
+            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark)); // Selected background
+            viewHolder.songTitle.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+            viewHolder.songArtist.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
         } else {
-            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), androidx.cardview.R.color.cardview_dark_background)); // Default color
+            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent)); // Default background
+            viewHolder.songTitle.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+            viewHolder.songArtist.setTextColor(ContextCompat.getColor(getContext(), android.R.color.darker_gray));
         }
 
         return convertView;
     }
 
-    // Method to update the selected song
+    // Call this to mark a song as selected
     public void setSelectedPosition(int position) {
-        selectedPosition = position; // Update the selected position
-        notifyDataSetChanged(); // Refresh the list to apply the highlighting
+        selectedPosition = position;
+        notifyDataSetChanged();
     }
 
-    // ViewHolder pattern for performance
     private static class ViewHolder {
         TextView songTitle;
         TextView songArtist;
