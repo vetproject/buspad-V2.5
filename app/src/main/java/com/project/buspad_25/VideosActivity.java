@@ -9,12 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
+import org.json.JSONArray;
 
-import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,33 +38,33 @@ public class VideosActivity extends AppCompatActivity {
             finish();
         });
 
-        new FetchFoldersTask().execute();
+        new FetchFoldersHttpTask().execute();
     }
 
-    private class FetchFoldersTask extends AsyncTask<Void, Void, Vector<ChannelSftp.LsEntry>> {
+    private class FetchFoldersHttpTask extends AsyncTask<Void, Void, List<String>> {
         @Override
-        protected Vector<ChannelSftp.LsEntry> doInBackground(Void... voids) {
-            Vector<ChannelSftp.LsEntry> folders = new Vector<>();
+        protected List<String> doInBackground(Void... voids) {
+            List<String> folders = new ArrayList<>();
             try {
-                JSch jsch = new JSch();
-                Session session = jsch.getSession("root", "192.168.8.222", 22);
-                session.setPassword("vet666888");
-                session.setConfig("StrictHostKeyChecking", "no");
-                session.connect();
+                URL url = new URL("http://192.168.8.222/managerfile/movies.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
 
-                Channel channel = session.openChannel("sftp");
-                channel.connect();
-                ChannelSftp sftp = (ChannelSftp) channel;
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder builder = new StringBuilder();
+                String line;
 
-                Vector<ChannelSftp.LsEntry> entries = sftp.ls("/var/www/html/movies");
-                for (ChannelSftp.LsEntry entry : entries) {
-                    if (entry.getAttrs().isDir() && !entry.getFilename().equals(".") && !entry.getFilename().equals("..")) {
-                        folders.add(entry);
-                    }
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
                 }
 
-                sftp.disconnect();
-                session.disconnect();
+                JSONArray array = new JSONArray(builder.toString());
+                for (int i = 0; i < array.length(); i++) {
+                    folders.add(array.getString(i));
+                }
+
+                reader.close();
+                conn.disconnect();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -70,19 +72,19 @@ public class VideosActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Vector<ChannelSftp.LsEntry> folders) {
+        protected void onPostExecute(List<String> folders) {
             if (folders.isEmpty()) {
                 Toast.makeText(VideosActivity.this, "No folders found", Toast.LENGTH_SHORT).show();
             } else {
                 LayoutInflater inflater = LayoutInflater.from(VideosActivity.this);
-                for (ChannelSftp.LsEntry folder : folders) {
+                for (String folder : folders) {
                     LinearLayout view = (LinearLayout) inflater.inflate(R.layout.folder_item, folderContainer, false);
                     TextView name = view.findViewById(R.id.folder_name);
-                    name.setText(folder.getFilename());
+                    name.setText(folder);
 
                     view.setOnClickListener(v -> {
                         Intent intent = new Intent(VideosActivity.this, FolderVideosActivity.class);
-                        intent.putExtra("folderName", folder.getFilename());
+                        intent.putExtra("folderName", folder);
                         startActivity(intent);
                     });
 
@@ -91,4 +93,5 @@ public class VideosActivity extends AppCompatActivity {
             }
         }
     }
+
 }

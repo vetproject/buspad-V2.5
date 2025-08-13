@@ -24,14 +24,17 @@ public class GameActivity extends AppCompatActivity {
 
         WebSettings webSettings = gameWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+
         gameWebView.setWebViewClient(new WebViewClient());
 
         String gamePath = getIntent().getStringExtra("gamePath");
 
         if (gamePath != null) {
-            gameWebView.loadUrl("file:///android_asset/" + gamePath);
+            gameWebView.loadUrl(gamePath); // ✅ Load directly from full URL
         } else {
-            gameWebView.loadUrl("file:///android_asset/www/Stick-Hero/index.html"); // fallback
+            // You can choose to load a default URL or show an error
+            gameWebView.loadUrl("http://192.168.8.222/Games/Stick-Hero/index.html");
         }
     }
 

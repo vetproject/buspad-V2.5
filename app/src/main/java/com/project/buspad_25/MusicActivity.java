@@ -10,12 +10,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
+import org.json.JSONArray;
 
-import java.util.Vector;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,30 +46,29 @@ public class MusicActivity extends AppCompatActivity {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class FetchFoldersTask extends AsyncTask<Void, Void, Vector<ChannelSftp.LsEntry>> {
+    private class FetchFoldersTask extends AsyncTask<Void, Void, List<String>> {
         @Override
-        protected Vector<ChannelSftp.LsEntry> doInBackground(Void... voids) {
-            Vector<ChannelSftp.LsEntry> folders = new Vector<>();
+        protected List<String> doInBackground(Void... voids) {
+            List<String> folders = new ArrayList<>();
             try {
-                JSch jsch = new JSch();
-                Session session = jsch.getSession("root", "192.168.8.222", 22);
-                session.setPassword("vet666888");
-                session.setConfig("StrictHostKeyChecking", "no");
-                session.connect();
+                URL url = new URL("http://192.168.8.222/managerfile/music_folders.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
 
-                Channel channel = session.openChannel("sftp");
-                channel.connect();
-                ChannelSftp sftp = (ChannelSftp) channel;
+                InputStream inputStream = new BufferedInputStream(conn.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder result = new StringBuilder();
+                String line;
 
-                Vector<ChannelSftp.LsEntry> entries = sftp.ls("/var/www/html/musics");
-                for (ChannelSftp.LsEntry entry : entries) {
-                    if (entry.getAttrs().isDir() && !entry.getFilename().equals(".") && !entry.getFilename().equals("..")) {
-                        folders.add(entry);
-                    }
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
                 }
 
-                sftp.disconnect();
-                session.disconnect();
+                JSONArray jsonArray = new JSONArray(result.toString());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    folders.add(jsonArray.getString(i));
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -73,21 +76,21 @@ public class MusicActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Vector<ChannelSftp.LsEntry> folders) {
+        protected void onPostExecute(List<String> folders) {
             if (folders.isEmpty()) {
                 Toast.makeText(MusicActivity.this, "No folders found or connection failed", Toast.LENGTH_SHORT).show();
             } else {
                 LayoutInflater inflater = LayoutInflater.from(MusicActivity.this);
-                for (ChannelSftp.LsEntry folder : folders) {
+                for (String folderName : folders) {
                     @SuppressLint("InflateParams")
                     LinearLayout view = (LinearLayout) inflater.inflate(R.layout.folder_item, null);
 
                     TextView name = view.findViewById(R.id.folder_name);
-                    name.setText(folder.getFilename());
+                    name.setText(folderName);
 
                     view.setOnClickListener(v -> {
                         Intent intent = new Intent(MusicActivity.this, SongFolderActivity.class);
-                        intent.putExtra("folderName", folder.getFilename());
+                        intent.putExtra("folderName", folderName);
                         startActivity(intent);
                     });
 
@@ -96,4 +99,5 @@ public class MusicActivity extends AppCompatActivity {
             }
         }
     }
+
 }

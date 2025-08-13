@@ -1,5 +1,6 @@
 package com.project.buspad_25;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.WindowDecorActionBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
@@ -32,6 +34,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     public void onBindViewHolder(@NonNull VideoViewHolder holder, int position) {
         Video video = videoList.get(position);
         holder.title.setText(video.getTitle());
+        holder.duration.setText(video.getDuration());
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, VideoPlayerActivity.class);
@@ -47,11 +50,15 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     }
 
     static class VideoViewHolder extends RecyclerView.ViewHolder {
+        @SuppressLint("RestrictedApi")
+        public WindowDecorActionBar.TabImpl video_duration;
         TextView title;
- 
+        TextView duration;
+
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.video_title);
+            duration = itemView.findViewById(R.id.video_duration);
         }
     }
 }

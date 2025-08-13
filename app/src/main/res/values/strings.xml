@@ -6,7 +6,7 @@
     <string name="movie">Movie</string>
     <string name="internet">Internet</string>
     <string name="game">Game</string>
-    <string name="version" translatable="false">Version 2.6.1</string>
+    <string name="version" translatable="false">Version 2.6.4</string>
     <string name="bus_image" translatable="false">bus_image</string>
     <string name="khmer_sg" translatable="false">Khmer Songs</string>
     <string name="english_sg" translatable="false">English Songs</string>
